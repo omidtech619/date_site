@@ -2,7 +2,9 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>💜</title>
+
   <style>
     body {
       margin: 0;
@@ -14,18 +16,21 @@
       background: linear-gradient(135deg, #4f46e5, #9333ea);
       overflow: hidden;
       color: white;
-    }
-
-    .box {
       text-align: center;
     }
 
+    .box {
+      padding: 20px;
+    }
+
     input {
-      padding: 10px;
+      padding: 12px;
       border-radius: 10px;
       border: none;
       outline: none;
       margin-top: 10px;
+      width: 80%;
+      max-width: 250px;
     }
 
     button {
@@ -46,13 +51,14 @@
     #no {
       background: #ef4444;
       color: white;
-      position: relative;
+      position: absolute;
     }
 
     .heart {
       position: absolute;
       color: pink;
       animation: floatUp 2s linear forwards;
+      font-size: 20px;
     }
 
     @keyframes floatUp {
@@ -61,6 +67,7 @@
     }
   </style>
 </head>
+
 <body>
 
 <div class="box">
@@ -73,8 +80,10 @@
 
   <div id="step2" style="display:none;">
     <h2 id="question"></h2>
+
     <button id="yes" onclick="yesClick()">آره ❤️</button>
     <button id="no" onclick="noClick()">نه 😢</button>
+
     <h3 id="sadText"></h3>
   </div>
 </div>
@@ -83,7 +92,7 @@
 let noMessages = [
   "قلبم شکست 💔",
   "جدی نه؟ 🥺",
-  "من برنامه‌ریزی کرده بودم 😔",
+  "من که برنامه‌ریزی کرده بودم 😔",
   "داری ناراحتم می‌کنی 😭",
   "باشه... ولی دلم گرفت 💙"
 ];
@@ -100,34 +109,36 @@ function start() {
 }
 
 function noClick() {
-  let noBtn = document.getElementById("no");
-  let yesBtn = document.getElementById("yes");
-  let text = document.getElementById("sadText");
+  const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
+  const text = document.getElementById("sadText");
 
   text.innerText = noMessages[noIndex % noMessages.length];
   noIndex++;
 
-  // فرار کردن دکمه
-  noBtn.style.position = "absolute";
-  noBtn.style.top = Math.random() * 80 + "%";
-  noBtn.style.left = Math.random() * 80 + "%";
+  const padding = 80;
 
-  // کوچیک شدن
+  const maxX = window.innerWidth - padding;
+  const maxY = window.innerHeight - padding;
+
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+
   noBtn.style.transform = "scale(0.9)";
 
-  // بزرگ شدن yes
-  yesBtn.style.transform = `scale(${1 + noIndex * 0.1})`;
+  yesBtn.style.transform = `scale(${1 + noIndex * 0.12})`;
 }
 
 function yesClick() {
   document.body.innerHTML = "<h1>یییییییی 💜❤️‍🔥</h1>";
 
   setInterval(() => {
-    let heart = document.createElement("div");
+    const heart = document.createElement("div");
     heart.innerHTML = "❤️";
     heart.className = "heart";
     heart.style.left = Math.random() * window.innerWidth + "px";
     heart.style.top = "80%";
+
     document.body.appendChild(heart);
 
     setTimeout(() => heart.remove(), 2000);
